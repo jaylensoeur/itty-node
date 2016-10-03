@@ -39,7 +39,7 @@ class ServiceLoader {
         let deps = null;
 
         if (!!module.provider) {
-            modulePath = this._loadFilePath(module.provider);
+            modulePath = require(module.provider); // eslint-disable-line global-require, import/no-dynamic-require
         } else {
             modulePath = module.parameter;
         }

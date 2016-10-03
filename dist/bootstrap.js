@@ -60,6 +60,7 @@ if (!status) {
 var logger = new Logger({ transports: [new _winston2.default.transports.Console()] });
 yaml.setRootPath(rootDir);
 var config = yaml.read(configPath);
+container.register('config', [], config);
 var serviceLoader = new _ServiceLoader2.default(container, config.services, logger);
 var routerLoader = new _RouteLoader2.default(container, logger);
 serviceLoader.setRootPath(rootDir);

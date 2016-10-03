@@ -29,6 +29,7 @@ if (!status) {
 const logger = new Logger({ transports: [new (Winston.transports.Console)()] });
 yaml.setRootPath(rootDir);
 const config = yaml.read(configPath);
+container.register('config', [], config);
 const serviceLoader = new ServiceLoader(container, config.services, logger);
 const routerLoader = new RouterLoader(container, logger);
 serviceLoader.setRootPath(rootDir);

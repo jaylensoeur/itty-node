@@ -37,6 +37,18 @@ class Container {
             const key = name.substring(1);
             dep = this.get(key);
             break;
+
+        case '%':
+            dep = null;
+            const keys = name.substring(1, name.length - 1).split('.');
+            if (!!keys && keys.length > 0) {
+                dep = this.get(keys[0]);
+                keys.shift();
+                for (const i in keys) {
+                    dep = dep[keys[i]];
+                }
+            }
+            break;
         default:
             break;
         }
