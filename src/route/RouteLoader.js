@@ -17,10 +17,9 @@ class RouteLoader {
 
     _attachRoute(server, method, path, service, action) {
         this._logger.info(`Route applied: ${method.toUpperCase()} [${path}] ${service}::${action}`);
-        server[method](path, (req, res, next) => {
+        server[method](path, (req, res) => {
             const controller = this._container.get(service);
             controller[action](req, res);
-            next();
         });
     }
 }
