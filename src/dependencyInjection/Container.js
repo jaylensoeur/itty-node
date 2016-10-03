@@ -31,9 +31,10 @@ class Container {
 
     getArgs(name) {
         let dep = name;
-        const key = name.substring(1);
-        switch (key) {
+
+        switch (name[0]) {
         case '@':
+            const key = name.substring(1);
             dep = this.get(key);
             break;
         default:

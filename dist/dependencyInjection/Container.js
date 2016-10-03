@@ -46,9 +46,10 @@ var Container = function () {
         key: 'getArgs',
         value: function getArgs(name) {
             var dep = name;
-            var key = name.substring(1);
-            switch (key) {
+
+            switch (name[0]) {
                 case '@':
+                    var key = name.substring(1);
                     dep = this.get(key);
                     break;
                 default:

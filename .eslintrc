@@ -13,6 +13,7 @@
         "no-continue": 0,
         "arrow-body-style": 0,
         "new-cap": 0,
+        "no-case-declarations": 0,
         "max-len": ["error", 160]
     }
 }
