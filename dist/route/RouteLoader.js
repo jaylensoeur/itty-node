@@ -56,10 +56,9 @@ var RouteLoader = function () {
             var _this = this;
 
             this._logger.info("Route applied: " + method.toUpperCase() + " [" + path + "] " + service + "::" + action);
-            server[method](path, function (req, res, next) {
+            server[method](path, function (req, res) {
                 var controller = _this._container.get(service);
                 controller[action](req, res);
-                next();
             });
         }
     }]);
