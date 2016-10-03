@@ -1,6 +1,8 @@
+import ExceptionInterfaceType from '../exception/ExceptionInterfaceType';
+
 class MiddlewareInterface {
     request() {
-        new Error(`interface must be implemented`);
+        throw new ExceptionInterfaceType();
     }
 }
 

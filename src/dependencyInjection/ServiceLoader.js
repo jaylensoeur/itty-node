@@ -1,5 +1,3 @@
-import path from 'path';
-
 class ServiceLoader {
     constructor(container, services, logger) {
         this._services = services;
@@ -43,7 +41,7 @@ class ServiceLoader {
         if (!!module.provider) {
             modulePath = this._loadFilePath(module.provider);
         } else {
-            modulePath =  module.parameter;
+            modulePath = module.parameter;
         }
 
         if (!!module.arguments) {
@@ -51,22 +49,22 @@ class ServiceLoader {
         }
 
         if (deps === null || deps.length === 0) {
-            this._logger.info('Registering provider: [' + name + ']');
+            this._logger.info(`Registering provider: [${name}]`);
             this._container.register(name, [], modulePath);
         } else {
-            this._container.register(name, deps, () => {
-                return modulePath(...args)
+            this._container.register(name, deps, (args) => {
+                return modulePath(...args);
             });
         }
     }
 
     _registerFactory(name, module) {
         const modulePath = this._loadFilePath(module.factory);
-        this._logger.info('Registering factory : [' + name + ']');
+        this._logger.info(`Registering factory : [${name}]`);
 
-        this._container.register(name, [], new function() {
+        this._container.register(name, [], new function Factory() {
             this.createInstance = () => new modulePath.default();
-        });
+        }());
     }
 
     _registerClassService(name, module) {
@@ -78,15 +76,15 @@ class ServiceLoader {
         }
 
         if (deps.length === 0) {
-            this._logger.info('Registering service: [' + name + ']');
+            this._logger.info(`Registering service: [${name}]`);
             this._container.register(name, [], () => {
-                this._logger.info('Creating instance: ' + modulePath.default.name);
+                this._logger.info(`Creating instance: ${modulePath.default.name}`);
                 return new modulePath.default();
             });
         } else {
-            this._logger.info('Registering service with dependencies: [' + name + ']');
+            this._logger.info(`Registering service with dependencies: [${name}]`);
             this._container.register(name, deps, (args) => {
-                this._logger.info('Creating instance: ' + modulePath.default.name);
+                this._logger.info(`Creating instance: ${modulePath.default.name}`);
                 return new modulePath.default(...args);
             });
         }
@@ -95,10 +93,10 @@ class ServiceLoader {
     _loadFilePath(moduleFileName = null) {
         if (!!moduleFileName) {
             if (this._startPath !== null) {
-                return require(this._startPath + '/' + moduleFileName);
+                return require(`${this._startPath}/${moduleFileName}`); // eslint-disable-line global-require, import/no-dynamic-require
             }
 
-            return require(moduleFileName);
+            return require(moduleFileName); // eslint-disable-line global-require, import/no-dynamic-require
         }
 
         throw new Error(`File not found ${moduleFileName}`);
