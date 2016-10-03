@@ -2,7 +2,7 @@
   "name": "itty-node",
   "version": "1.0.0",
   "description": "",
-  "main": "bootstrap.js",
+  "main": "dist/bootstrap.js",
   "directories": {
     "test": "test"
   },
