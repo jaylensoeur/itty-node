@@ -47,8 +47,8 @@ var rootDir = process.env.NODE_ROOT_PATH;
 var configPath = rootDir + '/config/' + environment + '/config.yml';
 var status = _fsPromise2.default.existsSync(configPath);
 
-if (status) {
-    throw new Error('Config file not found' + configPath);
+if (!status) {
+    throw new Error('Config file not found ' + configPath);
 }
 
 var logger = new Logger({ transports: [new _winston2.default.transports.Console()] });

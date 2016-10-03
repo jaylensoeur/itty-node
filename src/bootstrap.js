@@ -8,7 +8,6 @@ import RouterLoader from './route/RouteLoader';
 import Server from './server/ServerExpressAdapter';
 import MiddlewareInterface from './middleware/MiddlewareInterface';
 
-
 const Logger = Winston.Logger;
 const container = new Container();
 const yaml = new Yaml();
@@ -17,8 +16,8 @@ const rootDir = process.env.NODE_ROOT_PATH;
 const configPath = `${rootDir}/config/${environment}/config.yml`;
 const status = fsPromise.existsSync(configPath);
 
-if (status) {
-    throw new Error(`Config file not found${configPath}`);
+if (!status) {
+    throw new Error(`Config file not found ${configPath}`);
 }
 
 const logger = new Logger({ transports: [new (Winston.transports.Console)()] });
