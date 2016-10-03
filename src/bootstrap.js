@@ -13,7 +13,13 @@ const container = new Container();
 const yaml = new Yaml();
 const environment = process.env.NODE_ENV === 'production' ? 'prd' : process.env.NODE_ENV;
 const rootDir = process.env.NODE_ROOT_PATH;
+
+if (!rootDir) {
+    throw new Error('Missing NODE_ROOT_PATH environment variable');
+}
+
 const configPath = `${rootDir}/config/${environment}/config.yml`;
+
 const status = fsPromise.existsSync(configPath);
 
 if (!status) {

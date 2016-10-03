@@ -44,7 +44,13 @@ var container = new _Container2.default();
 var yaml = new _yamlWithImport2.default();
 var environment = process.env.NODE_ENV === 'production' ? 'prd' : process.env.NODE_ENV;
 var rootDir = process.env.NODE_ROOT_PATH;
+
+if (!rootDir) {
+    throw new Error('Missing NODE_ROOT_PATH environment variable');
+}
+
 var configPath = rootDir + '/config/' + environment + '/config.yml';
+
 var status = _fsPromise2.default.existsSync(configPath);
 
 if (!status) {
