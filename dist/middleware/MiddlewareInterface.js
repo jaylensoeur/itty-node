@@ -20,9 +20,9 @@ var MiddlewareInterface = function () {
     }
 
     _createClass(MiddlewareInterface, [{
-        key: 'request',
-        value: function request() {
-            throw new _ExceptionInterfaceType2.default();
+        key: 'invoke',
+        value: function invoke(req, res, next) {
+            throw new _ExceptionInterfaceType2.default('Implementation is required ' + req + ' ' + res + ' ' + next);
         }
     }]);
 

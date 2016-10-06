@@ -24,7 +24,7 @@ class MiddlewareLoader {
      * @private
      */
     _addToMiddlewareStack(server, middleware) {
-        this._logger.info(`Middleware applied: ${method.toUpperCase()} [${middleware.route}] ${middleware.service}`);
+        this._logger.info(`Middleware applied: ${middleware.service} [${middleware.route}]`);
         const middlewareInstance = this._container.get(middleware.service);
 
         if (middlewareInstance instanceof MiddlewareInterface) {

@@ -29,6 +29,10 @@ var _RouteLoader = require('./route/RouteLoader');
 
 var _RouteLoader2 = _interopRequireDefault(_RouteLoader);
 
+var _MiddlerwareLoader = require('./middleware/MiddlerwareLoader');
+
+var _MiddlerwareLoader2 = _interopRequireDefault(_MiddlerwareLoader);
+
 var _ServerExpressAdapter = require('./server/ServerExpressAdapter');
 
 var _ServerExpressAdapter2 = _interopRequireDefault(_ServerExpressAdapter);
@@ -63,9 +67,10 @@ var config = yaml.read(configPath);
 container.register('config', [], config);
 var serviceLoader = new _ServiceLoader2.default(container, config.services, logger);
 var routerLoader = new _RouteLoader2.default(container, logger);
+var middlewareLoader = new _MiddlerwareLoader2.default(container, logger);
 serviceLoader.setRootPath(rootDir);
 serviceLoader.registerServices();
-var server = new _ServerExpressAdapter2.default(config, container, routerLoader, logger);
+var server = new _ServerExpressAdapter2.default(config, container, routerLoader, middlewareLoader, logger);
 
 exports.application = server;
 exports.MiddlewareInterface = _MiddlewareInterface2.default;

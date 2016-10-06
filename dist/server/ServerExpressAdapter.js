@@ -25,7 +25,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ServerExpressAdapter = function (_ServerInterface) {
     _inherits(ServerExpressAdapter, _ServerInterface);
 
-    function ServerExpressAdapter(config, container, routeLoader, logger) {
+    function ServerExpressAdapter(config, container, routeLoader, middlewareLoader, logger) {
         _classCallCheck(this, ServerExpressAdapter);
 
         var _this = _possibleConstructorReturn(this, (ServerExpressAdapter.__proto__ || Object.getPrototypeOf(ServerExpressAdapter)).call(this));
@@ -33,6 +33,7 @@ var ServerExpressAdapter = function (_ServerInterface) {
         _this._express = (0, _express2.default)();
         _this._config = config;
         _this._container = container;
+        _this._middlewareLoader = middlewareLoader;
         _this._routeLoader = routeLoader;
         _this._logger = logger;
         return _this;
@@ -72,9 +73,14 @@ var ServerExpressAdapter = function (_ServerInterface) {
         key: '_initializeConfig',
         value: function _initializeConfig() {
             var routes = this._config.routes;
+            var middlewareStack = this._config.middlewareStack;
 
             for (var key in routes) {
                 this._routeLoader.register(this._express, routes[key]);
+            }
+
+            for (var _key in middlewareStack) {
+                this._middlewareLoader.register(this._express, middlewareStack[_key]);
             }
         }
     }]);
