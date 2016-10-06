@@ -5,6 +5,7 @@ import Winston from 'winston';
 import Container from './dependencyInjection/Container';
 import ServiceLoader from './dependencyInjection/ServiceLoader';
 import RouterLoader from './route/RouteLoader';
+import MiddlewareLoader from './middleware/MiddlerwareLoader';
 import Server from './server/ServerExpressAdapter';
 import MiddlewareInterface from './middleware/MiddlewareInterface';
 
@@ -32,10 +33,16 @@ const config = yaml.read(configPath);
 container.register('config', [], config);
 const serviceLoader = new ServiceLoader(container, config.services, logger);
 const routerLoader = new RouterLoader(container, logger);
+const middlewareLoader = new MiddlewareLoader(container, logger);
 serviceLoader.setRootPath(rootDir);
 serviceLoader.registerServices();
-const server = new Server(config, container, routerLoader, logger);
-
+const server = new Server(
+    config,
+    container,
+    routerLoader,
+    middlewareLoader,
+    logger
+);
 
 export {
     server as application,

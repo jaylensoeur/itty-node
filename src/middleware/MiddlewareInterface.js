@@ -1,7 +1,7 @@
 import ExceptionInterfaceType from '../exception/ExceptionInterfaceType';
 
 class MiddlewareInterface {
-    request() {
+    invoke(req, res, next) {
         throw new ExceptionInterfaceType();
     }
 }
