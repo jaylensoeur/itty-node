@@ -81,13 +81,13 @@ var ServerExpressAdapter = function (_ServerInterface) {
             var routes = this._config.routes;
             var middlewareStack = this._config.middleware_stack;
 
-            for (var key in routes) {
-                this._route.push(routes[key].path);
-                this._routeLoader.register(this._express, routes[key]);
+            for (var key in middlewareStack) {
+                this._middlewareLoader.register(this._express, middlewareStack[key]);
             }
 
-            for (var _key in middlewareStack) {
-                this._middlewareLoader.register(this._express, middlewareStack[_key]);
+            for (var _key in routes) {
+                this._route.push(routes[_key].path);
+                this._routeLoader.register(this._express, routes[_key]);
             }
         }
     }]);

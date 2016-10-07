@@ -45,13 +45,13 @@ class ServerExpressAdapter extends ServerInterface {
         const routes = this._config.routes;
         const middlewareStack = this._config.middleware_stack;
 
+        for (const key in middlewareStack) {
+            this._middlewareLoader.register(this._express, middlewareStack[key]);
+        }
+
         for (const key in routes) {
             this._route.push(routes[key].path);
             this._routeLoader.register(this._express, routes[key]);
-        }
-
-        for (const key in middlewareStack) {
-            this._middlewareLoader.register(this._express, middlewareStack[key]);
         }
     }
 }
