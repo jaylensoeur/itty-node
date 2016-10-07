@@ -29,13 +29,9 @@ class MiddlewareLoader {
 
         if (middlewareInstance instanceof MiddlewareInterface) {
             if (!!middleware.route) {
-                server.use(middleware.route, (req, res, next) => {
-                    middlewareInstance.invoke(req, res, next);
-                });
+                server.use(middleware.route, middlewareInstance.invoke);
             } else {
-                server.use(middleware.route, (req, res, next) => {
-                    middlewareInstance.invoke(req, res, next);
-                });
+                server.use(middlewareInstance.invoke);
             }
         }
     }
