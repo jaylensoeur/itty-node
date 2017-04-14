@@ -49,15 +49,17 @@ var Bootstrap = function () {
 
     _createClass(Bootstrap, null, [{
         key: 'invoke',
-        value: function invoke() {
+        value: function invoke(_ref) {
+            var rootDirectory = _ref.rootDirectory;
+
             var Logger = _winston2.default.Logger;
             var container = new _Container2.default();
             var yaml = new _yamlWithImport2.default();
-            var environment = process.env.NODE_ENV === 'production' ? 'prd' : process.env.NODE_ENV;
-            var rootDir = process.env.NODE_ROOT_PATH;
+            var environment = process.env.NODE_ENV;
+            var rootDir = rootDirectory;
 
             if (!rootDir) {
-                throw new Error('Missing NODE_ROOT_PATH environment variable');
+                throw new Error('Missing root path environment variable');
             }
 
             var configPath = rootDir + '/config/' + environment + '/config.yml';
@@ -72,6 +74,7 @@ var Bootstrap = function () {
             var config = yaml.read(configPath);
 
             container.register('config', [], config);
+            container.register('itty_node_logger', [], logger);
 
             var serviceLoader = new _ServiceLoader2.default(container, config.services, logger);
             var routerLoader = new _RouteLoader2.default(container, logger);

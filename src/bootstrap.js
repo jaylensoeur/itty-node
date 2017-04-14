@@ -9,15 +9,15 @@ import MiddlewareLoader from './middleware/MiddlerwareLoader';
 import Server from './server/ServerExpressAdapter';
 
 class Bootstrap {
-    static invoke() {
+    static invoke({ rootDirectory }) {
         const Logger = Winston.Logger;
         const container = new Container();
         const yaml = new Yaml();
-        const environment = process.env.NODE_ENV === 'production' ? 'prd' : process.env.NODE_ENV;
-        const rootDir = process.env.NODE_ROOT_PATH;
+        const environment = process.env.NODE_ENV;
+        const rootDir = rootDirectory;
 
         if (!rootDir) {
-            throw new Error('Missing NODE_ROOT_PATH environment variable');
+            throw new Error('Missing root path environment variable');
         }
 
         const configPath = `${rootDir}/config/${environment}/config.yml`;
@@ -30,9 +30,6 @@ class Bootstrap {
         const logger = new Logger({ transports: [new (Winston.transports.Console)()] });
         yaml.setRootPath(rootDir);
         const config = yaml.read(configPath);
-
-        container.register('config', [], config);
-
         const serviceLoader = new ServiceLoader(container, config.services, logger);
         const routerLoader = new RouterLoader(container, logger);
         const middlewareLoader = new MiddlewareLoader(container, logger);
@@ -47,6 +44,8 @@ class Bootstrap {
             logger
         );
 
+        container.register('config', [], config);
+        container.register('itty_node_logger', [], logger);
         container.register('itty_node_server', [], server);
 
         return server;

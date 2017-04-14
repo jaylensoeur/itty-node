@@ -106,7 +106,7 @@ class Container {
 
         moduleRegistry.deps.forEach((dep) => {
             if (dep === moduleRegistry.name) {
-                throw new Error(`Module ${dep} can\'t depend on itself`);
+                throw new Error(`Module ${dep} can't depend on itself`);
             }
             res.push(self.getArgs(dep));
         });
