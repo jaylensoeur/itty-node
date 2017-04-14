@@ -52,9 +52,9 @@ var MiddlewareLoader = function () {
 
             if (middlewareInstance instanceof _MiddlewareInterface2.default) {
                 if (!!middleware.route) {
-                    server.use(middleware.route, middlewareInstance.invoke);
+                    server.use(middleware.route, middlewareInstance.invoke.bind(middlewareInstance));
                 } else {
-                    server.use(middlewareInstance.invoke);
+                    server.use(middlewareInstance.invoke.bind(middlewareInstance));
                 }
             }
         }
