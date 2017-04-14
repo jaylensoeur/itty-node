@@ -72,10 +72,6 @@ var Bootstrap = function () {
             var logger = new Logger({ transports: [new _winston2.default.transports.Console()] });
             yaml.setRootPath(rootDir);
             var config = yaml.read(configPath);
-
-            container.register('config', [], config);
-            container.register('itty_node_logger', [], logger);
-
             var serviceLoader = new _ServiceLoader2.default(container, config.services, logger);
             var routerLoader = new _RouteLoader2.default(container, logger);
             var middlewareLoader = new _MiddlerwareLoader2.default(container, logger);
@@ -84,6 +80,8 @@ var Bootstrap = function () {
 
             var server = new _ServerExpressAdapter2.default(config, container, routerLoader, middlewareLoader, logger);
 
+            container.register('config', [], config);
+            container.register('itty_node_logger', [], logger);
             container.register('itty_node_server', [], server);
 
             return server;
